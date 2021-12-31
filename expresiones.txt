@@ -1,0 +1,95 @@
+import java.util.Scanner;
+import MiLibreria.Opciones.*;
+import LibreriaExterna.MisFunciones.Funcion;
+
+namespace second_space 
+{
+	class MiClase2 : MiClase1 
+	{
+		for (int i = 0 ;< i numero;i = i+3)
+		{
+			& i "54fhg" => Metodo
+		}
+		public static void Main (String args)
+		{
+			String variable = "gausio"
+			int numero = 24
+
+			fopen(args,fscanf,true);
+			for (int i = 0 ;< i numero;i = i+3)
+			{
+				& i "54fhg" => Metodo
+			}
+			
+			String expresion
+			WriteLine "Ingrese la opcion deseada";
+			ReadLine expresion;
+			
+			switch(expresion)
+			{
+				case "uno" :
+					& => Metodo
+				break;
+				case "dos" :
+					try
+						struct nombreAlgo 
+						{
+							int numero;
+							char cadena[10];
+						};
+					catch 
+						WriteLine "error el numero"@1 => numero;
+					finally
+						rand numero, int, clock, +;
+						WriteLine "Ingreso el numero" @1 "que contiene" @2 => numero cadena;
+						& numero 10 => miFuncion
+						return numero;
+					}
+				break;
+				default :
+					get { return nombreCurso;}
+					set { nombreCurso = value;}
+			}
+			if > id 0:
+				while < i 3 
+				{
+					WriteLine " ha ingresado el numero "@1 => variable;
+					
+					if < id 0:
+					
+						int valores = new int[10,19,19,78,7,5,5,5,5,5];
+						List valores(1,3,>>);
+						atoi("c");
+						ltrim("               cadena              ");
+						
+						foreach (int i in valores)
+						{
+							WriteLine @1 => i;
+						}
+					}
+				}
+				
+			else
+				WriteLine "error";
+			}
+		}
+		
+		public String Metodo(String filepath)
+		{
+			fopen(filepath,fscanf,true);
+			String nombre
+			strcpy(nombre,"Pepito");
+			create if not exist misDatos;
+			use misDatos;
+			create table if not exist datos(nombre String, numero int,data String,fecha date);
+			insert into misDatos values (nombre,54874,"MiCadena",fecha);
+			select nombre from datos;
+		}		
+		
+		public int miFuncion(int x, int y){
+			int numero
+			numero = x+y+10*5
+			return numero;
+		}
+	}
+}

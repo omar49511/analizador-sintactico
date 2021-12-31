@@ -1,0 +1,884 @@
+PARSER_BEGIN(Programa)
+import java.util.logging.*;
+import java.io.*;
+import java.util.ArrayList;
+class Programa
+{
+	/*public static void main(String[]args) throws ParseException, TokenMgrError
+	{
+		Programa analizador=new Programa(System.in);
+		analizador.Iniciar();
+	}*/
+	
+	public static void main(String[] args) {
+		try {
+            Programa analizador = new Programa(new BufferedReader(new FileReader("./expresiones.txt")));
+            analizador.Iniciar();
+			System.out.println("No se encontraron problemas.");
+        } catch (ParseException e) {
+            System.err.println(e.getMessage());
+			System.out.println("El programa presenta errores.");
+        }
+		catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+         catch(TokenMgrError e){
+            System.err.println(e.getMessage());
+        } 
+    }
+}
+PARSER_END(Programa)
+
+/**Tokens que seran ignorados durante el analisis*/
+SKIP : {
+      " "
+    | "\t"
+    | "\r"
+    | "\n"
+}
+
+//Declaracion de tokens
+
+//Token para impresion de caractreres
+TOKEN : {
+	<IMPRESION:"print"|"println"|"printf"|"WriteLine"|"Write"|"puts"|"show"|"putStrLn"|"putStr"|"echo"|"cout">
+}
+
+//Token para operadores realcionales
+TOKEN : {
+	<OPERADORRELACIONAL:"=="|"!="|"<="|">="|"<"|">">
+}
+
+//Token para la caputa de datos
+TOKEN : {
+	<CAPTURARDATO:"getchar"|"getch"|"ReadLine"|"Read"|"gets"|"nextLine"|"input"|"cin">
+}
+
+//Token para operaciones con caracter
+TOKEN : {
+	<OPERACIONESCARACTER:"atoi"|"isalnum"|"isalpha"|"islower"|"isupper"|"isdigit"|"isspace"|"isblank"|"tolower"|"toupper">
+}
+TOKEN:{
+	<ESPACIONOMBRE: "namespace">
+}
+
+//Token para manejo de archivos
+TOKEN : {
+	<ABRIRARCHIVO:"fopen">
+	|<CERRARARCHIVO:"fclose">
+	|<RENOMBRARARCHIVO:"rename">
+	|<REMOVERARCHIVO:"remove">
+	|<ARCHIVOTEMPORAL:"tmpfile">
+	|<LEERARCHIVO:"fscanf">
+	|<IMPRIMIRARCHIVO:"fprintf">
+}
+
+//Token para limpiar el buffer
+TOKEN : {
+	<LIMPIARBUFFER:"fflush">
+}
+
+//Token para operaciones con String
+TOKEN : {
+	<COPIARCADENA:"strcpy">
+	|<COMPARARCADENA:"strcmp">
+	|<ENCONTRARCADENA:"strfind">
+	|<CONCATENARCADENA:"strcat">
+	|<LONGITUDCADENA:"strlen">
+}
+
+//Token para operaciones matematicas
+TOKEN : {
+	<MENORENTERO:"ceiling">
+	|<FUNCIONBESSEL:"jn">
+	|<LOGARITMO:"log"|"log10">
+	|<RAIZ:"sqrt">
+	|<POTENCIA:"pow">
+	|<EXPONENCIAL:"exp">
+	|<FUNCIONESTRIGONOMETRICAS:"cos"|"sin"|"tan">
+	|<FUNCIONESTRIGONOMETRICASINV:"acos"|"asin"|"atan">
+	|<TRUNCARVALOR:"trunc">
+	|<REDONDEONUMERO:"ceil"|"floor"|"round">
+	|<NUMEROALEATORIO:"rand">
+	|<VALORABSOLUTO:"abs"|"labs">
+}
+
+//Token para operaciones de memoria
+TOKEN : {
+	<ASIGNARMEMORIA:"malloc"|"realloc"|"calloc">|<LIBERARMEMORIA:"free">
+}
+
+//Token para simbolos
+TOKEN : {
+	<PARENTESISAPERTURA:"(">
+	|<PARENTESISCERRADURA:")">
+	|<LLAVEAPERTURA:"{">
+	|<LLAVECERRADURA:"}">
+	|<CORCHETEAPERTURA:"[">
+	|<CORCHETECERRADURA:"]">
+	|<PUNTO:".">
+	|<COMA:",">
+	|<SEMICOLON:";">
+}
+
+//Token para operacion de dormir
+TOKEN : {
+	<DORMIR:"sleep">
+}
+
+//Token para delay
+TOKEN : {
+	<RETRASAR:"delay">
+}
+
+//Token para diectorio
+TOKEN : {
+	<DIRECTORIO:"dir">
+}
+
+//Token para llamar una funcion
+TOKEN : {
+	<LLAMAR:"call">
+}
+
+//Token para modulo
+TOKEN : {
+	<MODULO:"module">
+}
+
+//Token para declarar un tipo nuevo
+TOKEN : {
+	<NUEVOTIPO:"newType">
+}
+
+//Token para lista
+TOKEN : {
+	<LISTA:"List">
+	|<PRIMEROLISTA:"first"|"head">
+	|<ULTIMOLISTA:"last"|"tail">
+}
+
+//Token para tupla
+TOKEN : {
+	<TUPLA:"tuple">{System.out.println("TUPLA");}
+}
+
+//Token para pulsos de reloj
+TOKEN : {
+	<PULSOSDERELOJ:"clock">
+}
+
+//Token para opreciones de string a numero
+TOKEN : {
+	<OPERACIONESSTRINGNUMERO:"atol"|"strtod"|"atof"|"strtol"|"strtoll"|"strtoull">
+}
+
+//Token para ordenar 
+TOKEN : {
+	<ORDENAR:"sort">
+}
+
+//Token para rango
+TOKEN : {
+	<RANGO:"range">
+}
+
+//Token para operaciones con bits
+TOKEN : {
+	<OPERACIONESBIT:"~">
+}
+
+TOKEN : {
+	<MOVERELEMENTO:">>"|"<<">
+}
+
+//Token para ayuda
+TOKEN : {
+	<AYUDA:"help">
+}
+
+//Token para metodo quicksort
+TOKEN : {
+	<QUICKSORT:"qsort">
+}
+
+//Token para cola
+TOKEN : {
+	<COLA:"queue">
+}
+TOKEN :{
+	<ARROBA: "@">
+}
+//Token para funciones del cronometro
+TOKEN : {
+	<INICIOCRONOMETRO:"tic">
+	|<FINCRONOMETRO:"toc">
+}
+
+//Token para set y get
+TOKEN : {
+	<OBTENER:"get">
+	|<ASIGNAR:"set">
+}
+
+//Token para Sockets
+TOKEN : {
+	<SOCKET:"Socket">
+	|<SERVIDORSOCKET:"ServerSocket">
+}
+
+//Token para entrada de datos
+TOKEN : {
+	<ENTRADADATOS:"InputStream">
+}
+
+//TOken para salida de datos en el cliente
+TOKEN : {
+	<SALIDADATOSCLIENTE:"OutputStream">
+}
+
+TOKEN : {
+	<SALIDADATOS:"DataOutputStream">
+}
+
+//Token para funcion de remplazar
+TOKEN : {
+	<REMPLAZAR:"replace">
+}
+
+//Token para convertir
+TOKEN : {
+	<CONVERTIR:"Convert">
+}
+
+//Token para longitud
+TOKEN : {
+	<LONGITUD:"length">
+}
+
+//Token para operaciones de la pila
+TOKEN : {
+	<PILA:"stack">
+	|<METERDATOPILA:"push">
+	|<SACARDATOPILA:"pop">
+	|<CLONARPILA:"clone">
+}
+
+//Token para MCD
+TOKEN : {
+	<MCD:"gcd">
+}
+
+//Token para MCM
+TOKEN : {
+	<MCM:"lcm">
+}
+
+//Token para analizar gramatica
+TOKEN : {
+	<ANALIZAGRAMATICA:"Parse">
+}
+
+//Token para even
+TOKEN : {
+	<PAR:"even">
+}
+
+//Token para funcion de peternece
+TOKEN : {
+	<PERTENECE:"elem">
+}
+
+//Token para all
+TOKEN : {
+	<TODOS:"all">
+}
+
+//Token para any
+TOKEN : {
+	<ALGUNO:"any">
+}
+
+TOKEN : /* Booleano */
+{
+	<BOOLEANO: "true" | "false">
+}
+TOKEN: /* Ciclos */
+{
+	<HACER: "do">|<PARA: "for">|<MIENTRAS: "while">|<LAZO: "loop">|<CADAUNO:"foreach">
+}
+TOKEN:
+{
+	<CONDICION: ("if")+>
+}
+TOKEN:
+{
+	<SINO: ("else")+>
+}
+TOKEN:
+{
+	<CASO: ("case")+>
+}
+TOKEN:
+{
+	<CONSTANTE: "const">
+}
+TOKEN:
+{
+	<CLASE: "class">
+}
+TOKEN:
+{
+	<LIMPIARCONSOLA: "clear">
+}
+TOKEN:
+{
+	<DETENER: "break">
+}
+TOKEN:
+{
+	<ESTATICO: "static">
+}
+TOKEN:
+{
+	<FLUJOCONTROL: "switch">
+}
+TOKEN:
+{
+	<MANEJOEXEPCIONES: "throw" | "Raise">
+}
+TOKEN:
+{
+	<INTENTAR:"try" >|<ATRAPAR:"catch">|<FINALIZAR: "finally">
+}
+TOKEN:
+{
+	<OPTIMIZACION: "volatile">
+}
+TOKEN:
+{
+	<PORDEFECTO: "default">
+}
+TOKEN:
+{
+	<REGRESAR: "return" | "yield">
+}
+TOKEN: /*TIPOS*/
+{
+	<TIPOACCESO: "global" | "private" | "protected" | "public" | "transient" | "internal" | "abstract">
+|<TIPODATO: "boolean" | "byte" | "char" | "double" | "float" | "int" | "varchar" | "decimal" | "tinyint"| "String" | "ushort" | "sbyte">
+|<TIPOMETODO: "void">
+}
+TOKEN:
+{
+	<ENUMERAR: "enum">
+}
+TOKEN:
+{
+	<SIZE: "sizeof">
+}
+TOKEN:
+{
+	<ESTRUCTURA: "struct">
+}
+TOKEN:
+{
+	<UNION: "union">
+}
+TOKEN:
+{
+	<DESDE: "from">
+}
+TOKEN:
+{
+	<CONTINUAR: "continue">
+}
+TOKEN:
+{
+	<IRA: "goto" | "jump">
+}
+TOKEN:
+{
+	<PAQUETE: "package">
+}
+TOKEN:
+{
+	<OTROLENGUAJE: "native">
+}
+TOKEN:
+{
+	<EXPORTAR: "export">
+}
+TOKEN:
+{
+	<EN: "in">
+}
+TOKEN:
+{
+	<ES: "is">
+}
+TOKEN:
+{
+	<BORRAR: "del" | "drop">
+}
+TOKEN:
+{
+	<NOOPERACION: "nop">
+}
+TOKEN:
+{
+	<DEFINIR: "#define">
+}
+TOKEN:
+{
+	<INCLUIR: "#include">
+}
+TOKEN:
+{
+	<SINCRONIZAR: "synchronized">
+}
+TOKEN:
+{
+	<HILO: "Thread">
+}
+TOKEN:
+{
+	<NUMEROSINSIGNO: "unsigned">
+}
+TOKEN:
+{
+	<NUEVAINSTANCIA: "new">
+}
+TOKEN:
+{
+	<ARREGLO: "Array">
+}
+TOKEN:
+{
+	<IMPLEMENTAR: "implements">
+}
+TOKEN:
+{
+	<SALIR: "exit" | "quit">
+}
+TOKEN:
+{
+	<CERRAR: "close">
+}
+TOKEN:
+{
+<EMPEZAR: "begin">
+}
+TOKEN:
+{
+	<TERMINAR: "end">
+}
+TOKEN:
+{
+	<PROCEDIMIENTO: "procedure">
+}
+TOKEN:
+{
+	<EMPEZARMODULO: "unit">
+}
+TOKEN:
+{
+	<ASTERISCO: "*">
+}
+TOKEN:
+{
+	<UNIDADESAUTILIZAR: "uses">
+}
+TOKEN: /*Operadores*/
+{
+	<OPERADORLOGICO: "and" | "or" | "xor" | "&&" | "||" | "!" | "^">|<OPERADORMATEMATICO: "/" | "*"| "-" | "+" | "%">
+}
+TOKEN: /*Operadores*/
+{
+	<OPERADORLOGICO_NOT:"not">
+}
+TOKEN: /*Operadores*/
+{
+	<AMPERSON: "&">
+}
+TOKEN:
+{
+	<ASIGNACION: "=">
+}
+TOKEN:
+{
+	<VALOR: "value">
+}
+TOKEN:
+{
+	<TIEMPO: "date" | "time">
+}
+TOKEN: /*SQL*/
+{
+	<CREAR: "create">|<USAR: "use">|<TABLA: "table">|<EJECUTAR: "exec">|<LLAVE: "key">|<INSERTAR: "insert">|<VALORES: "values">|<CONTAR: "count">|<FORANEO: "foreign">|<VISTA: "view">|<SELECCIONAR: "select">|<UNIR: "join">|<DONDE: "where">|<EXISTE: "exist">|<DENTRO:"into">
+}
+TOKEN:
+{
+	<TIPO: "type">
+}
+TOKEN: /*Maximos y minimos*/
+{
+	<MAXIMO: "max">|<MAXIMOLISTA: "maximum">|<MINIMO: "min">|<MINIMOLISTA: "minimum">
+}
+TOKEN:
+{
+	<PROMEDIO: "avg">
+}
+TOKEN:{
+	<IMPORTAR: "import">
+}
+
+TOKEN:
+{
+	<QUITARESPACIOS: "ltrim">
+}
+
+TOKEN:
+{
+	<REPLICAR: "replicate">
+}
+
+TOKEN:
+{
+	<VOLTEAR: "reverse">
+}
+TOKEN: /*Especiales*/
+{
+	<FORMATOENTRADA: "%s" | "%d" | "%fi">|<COMENTAR: "//">
+}
+
+TOKEN:
+{
+  <ACCESOCLASE: "base" | "super">
+}
+
+TOKEN:
+{
+  <AFIRMACONDICION: "assert">
+}
+
+TOKEN: {
+	<COMILLAS: "\"">
+}
+TOKEN: {
+	<DOSPUNTOS: ":">
+}
+TOKEN:{
+	<FLECHA: "=>">
+}
+TOKEN: {
+	<NUMERO: (["0"-"9"])+>
+	|<NUMERODEC:<NUMERO><PUNTO><NUMERO>>
+}
+
+TOKEN: {
+	  <IDENTIFICADOR:(<LETRAS>) (<LETRAS>|<NUMERO>)*> 
+}
+
+TOKEN: {
+	  <LETRAS:(["a"-"z","A"-"Z","_"])+> 
+}
+
+TOKEN: {
+	  <CADENA: "\"" (<LETRAS>|<NUMERO>|" ")* "\"">
+}
+
+void Iniciar() :
+{}
+{
+  (importarJava())* SentenciaNamespace() <EOF>
+}
+
+void importarJava():
+{}
+{
+	<IMPORTAR> <IDENTIFICADOR> <PUNTO> <IDENTIFICADOR> <PUNTO> (<IDENTIFICADOR>|<ASTERISCO>) <SEMICOLON>
+}
+
+void SentenciaNamespace():
+{}
+{
+	<ESPACIONOMBRE><IDENTIFICADOR><LLAVEAPERTURA>(Produccion_Clase())*<LLAVECERRADURA>
+}
+
+/* Regla de produccion de clase */
+void Produccion_Clase() :
+{}
+{
+	<CLASE><IDENTIFICADOR>(<DOSPUNTOS><IDENTIFICADOR>)?<LLAVEAPERTURA>(Produccion_Metodo())*<LLAVECERRADURA>
+}
+
+/* Regla de produccion de metodo */
+void Produccion_Metodo() :
+{}
+{
+	Acceso_estatico()(TipoMet_identi()|Declaracion_variable())<PARENTESISAPERTURA>(Declaracion_variable()(<COMA>Declaracion_variable())?)*<PARENTESISCERRADURA><LLAVEAPERTURA>(Bloque())*(RegresaValor())?<LLAVECERRADURA>
+
+}
+
+void TipoMet_identi() :
+{}
+{
+	<TIPOMETODO><IDENTIFICADOR>
+}
+
+void Declaracion_variable() :
+{}
+{
+	<TIPODATO><IDENTIFICADOR>
+}
+
+void Acceso_estatico() :
+{}
+{
+	<TIPOACCESO>(<ESTATICO>)?
+}
+
+/* Regla de produccion de for */
+void Instruccion_For() :
+{}
+{
+	<PARA><PARENTESISAPERTURA>(Asignacion_variable())<SEMICOLON>Expresion_Booleana()<SEMICOLON>Operacion_Aritmetica()<PARENTESISCERRADURA><LLAVEAPERTURA>(Bloque())*<LLAVECERRADURA>
+}
+
+void Asignacion_variable() :
+{}
+{
+	(Declaracion_variable())(<ASIGNACION>(Valores_Numericos()|<CADENA>|<BOOLEANO>|Instruccion_Arreglo()))?
+	/*inicia con declaracion de variable*/
+}
+
+void Valores_Numericos() :
+{}
+{
+	<NUMERO>|<NUMERODEC>
+}
+void Expresion_Booleana() :
+{}
+{
+	<OPERADORRELACIONAL><IDENTIFICADOR>(<IDENTIFICADOR>|Valores_Numericos()|<BOOLEANO>)
+}
+
+void Operacion_Aritmetica() :
+{}
+{
+	<IDENTIFICADOR><ASIGNACION>(<IDENTIFICADOR>|Valores_Numericos()) ((<OPERADORMATEMATICO>|<ASTERISCO>)(<IDENTIFICADOR>|Valores_Numericos()))+
+}
+/* Regla de produccion de switch */
+void Instruccion_Switch() :
+{}
+{
+	<FLUJOCONTROL><PARENTESISAPERTURA><IDENTIFICADOR><PARENTESISCERRADURA><LLAVEAPERTURA>(<CASO>(Numeros_Letras()|<IDENTIFICADOR>)<DOSPUNTOS>(Bloque())*<DETENER><SEMICOLON>)+ (<PORDEFECTO><DOSPUNTOS>)?(Bloque())*<LLAVECERRADURA>
+}
+
+/* Regla de produccion del Arreglo */
+void Instruccion_Arreglo() :
+{}
+{
+	<NUEVAINSTANCIA><TIPODATO><CORCHETEAPERTURA>Lista_de_numPrima()<CORCHETECERRADURA><SEMICOLON>
+}
+
+void Numeros_Letras() :
+{}
+{
+	Valores_Numericos()|<CADENA>
+}
+void Lista_de_numPrima() :
+{}
+{
+	(Numeros_Letras())?<COMA>Numeros_Letras()(Lista_de_numPrima())?
+}
+
+void Instruccion_If() :
+{}
+{
+	<CONDICION>Expresion_Booleana()<DOSPUNTOS>(Bloque())*(<LLAVECERRADURA>|<SINO>(Expresion_Booleana()<DOSPUNTOS>)?(Bloque())*<LLAVECERRADURA>)
+}
+void instruccion_while() :
+{}
+{
+	<MIENTRAS>Expresion_Booleana()<LLAVEAPERTURA>(Bloque())*<LLAVECERRADURA>
+}
+void Instruccion_Excepciones() :
+{}
+{
+	<INTENTAR> (Bloque())* <ATRAPAR> (Bloque())*(<FINALIZAR>(Bloque())*RegresaValor())?<LLAVECERRADURA>
+}
+void Instruccion_DeclararMetodo() :
+{}
+{
+	<AMPERSON>(ID_Numero()|<CADENA>)*<FLECHA><IDENTIFICADOR>
+}
+void estructuraC():
+{}
+{
+	<ESTRUCTURA> <IDENTIFICADOR> <LLAVEAPERTURA> (<TIPODATO> <IDENTIFICADOR> (<CORCHETEAPERTURA> <NUMERO> <CORCHETECERRADURA>)? <SEMICOLON>)+<LLAVECERRADURA> <SEMICOLON>
+}
+
+
+void cadaElemento():
+{}
+{
+	<CADAUNO> <PARENTESISAPERTURA> <TIPODATO> <IDENTIFICADOR> <EN> <IDENTIFICADOR> <PARENTESISCERRADURA> <LLAVEAPERTURA>(Bloque())*<LLAVECERRADURA>
+}
+
+void EscribirDato():
+{}
+{
+	<IMPRESION>((<ARROBA> <NUMERO>)|<CADENA>)+ (<FLECHA>  (<IDENTIFICADOR>)+)?  <SEMICOLON>
+}
+void leerDato():
+{}
+{
+	 <CAPTURARDATO> (<IDENTIFICADOR>)+ <SEMICOLON>
+}
+void manejoArchivo():
+{}
+{
+	<ABRIRARCHIVO> <PARENTESISAPERTURA> <IDENTIFICADOR> <COMA> OpArchivos() <COMA> <BOOLEANO> <PARENTESISCERRADURA> <SEMICOLON>
+}
+void OpArchivos():
+{}
+{
+	 <ABRIRARCHIVO>|<RENOMBRARARCHIVO>|<REMOVERARCHIVO>|<LEERARCHIVO>|<IMPRIMIRARCHIVO>
+}
+void moverElementoLista():
+{}
+{
+	<LISTA>  <IDENTIFICADOR> <PARENTESISAPERTURA>  <NUMERO> <COMA> <NUMERO> <COMA> <MOVERELEMENTO> <PARENTESISCERRADURA> <SEMICOLON>
+}
+void numAleatorio():
+{}
+{
+	<NUMEROALEATORIO> <IDENTIFICADOR> <COMA> <TIPODATO> <COMA> <PULSOSDERELOJ> <COMA> <OPERADORMATEMATICO> <SEMICOLON>
+}
+void RegresaValor():
+{}
+{
+	<REGRESAR>ID_Numero()<SEMICOLON>
+}
+void ID_Numero():
+{}
+{
+	<IDENTIFICADOR>|<NUMERO>
+}
+void OperacionLista():
+{}
+{
+	(<PRIMEROLISTA>|<ULTIMOLISTA>)<PARENTESISAPERTURA><IDENTIFICADOR><PARENTESISCERRADURA><SEMICOLON>
+}
+void OperacionesString():
+{}
+{
+	OpString() <PARENTESISAPERTURA> <IDENTIFICADOR> <COMA> (<IDENTIFICADOR>|<CADENA>) <PARENTESISCERRADURA> <SEMICOLON>
+}
+void OpString():
+{}
+{
+	(<COPIARCADENA>|<COMPARARCADENA>|<ENCONTRARCADENA>|<CONCATENARCADENA>)
+}
+void OpCaracter():
+{}
+{
+ 	<OPERACIONESCARACTER><PARENTESISAPERTURA>(<CADENA>|<IDENTIFICADOR>)<PARENTESISCERRADURA><SEMICOLON>
+}
+void QuitarEspacio():
+{}
+{
+	<QUITARESPACIOS><PARENTESISAPERTURA>(<CADENA>|<IDENTIFICADOR>)<PARENTESISCERRADURA><SEMICOLON>
+}
+void MaxMinLista():
+{}
+{
+	(<MAXIMOLISTA>|<MINIMOLISTA>)<PARENTESISAPERTURA><IDENTIFICADOR><PARENTESISCERRADURA><SEMICOLON>
+}
+
+/*Secuencias SQL*/
+void seleccionarDatoBD():
+{}
+{
+	<SELECCIONAR>((ID_Multiple())+|<ASTERISCO>) <DESDE> <IDENTIFICADOR> (<DONDE> <IDENTIFICADOR> <ASIGNACION> (<NUMERO>|(<CADENA>)))? <SEMICOLON>
+}
+void ID_Multiple():
+{}
+{
+	<IDENTIFICADOR>(<COMA><IDENTIFICADOR>)?
+}
+
+void usarBD():
+{}
+{
+	<USAR><IDENTIFICADOR><SEMICOLON>
+}
+
+void crearDatosBD():
+{}
+{
+	<CREAR>(<TABLA>)?(<CONDICION><OPERADORLOGICO_NOT><EXISTE>)? <IDENTIFICADOR>(crearTabla())? <SEMICOLON>
+}
+
+void agregarDatosBD():
+{}
+{
+	<INSERTAR> <DENTRO> <IDENTIFICADOR> <VALORES> <PARENTESISAPERTURA> (<IDENTIFICADOR>|<CADENA>|<NUMERO>|<TIEMPO>|<COMA>)+ <PARENTESISCERRADURA> <SEMICOLON>
+}
+
+void crearTabla():
+{}
+{
+	<PARENTESISAPERTURA><IDENTIFICADOR>datoBD()(<COMA><IDENTIFICADOR>datoBD())* <PARENTESISCERRADURA>
+}
+
+void datoBD():
+{}
+{
+	<TIPODATO>|<TIEMPO>
+}
+ 
+void InstruccionGET():
+{}
+{
+	<OBTENER><LLAVEAPERTURA><REGRESAR><IDENTIFICADOR><SEMICOLON><LLAVECERRADURA>
+}
+void InstruccionSET():
+{}
+{
+	<ASIGNAR><LLAVEAPERTURA><IDENTIFICADOR><ASIGNACION><VALOR><SEMICOLON><LLAVECERRADURA>
+}
+
+void Bloque():
+{}
+{
+	Instruccion_For()
+  |Instruccion_Switch()
+  |Asignacion_variable()
+  |Instruccion_If()
+  |instruccion_while()
+  |Instruccion_Excepciones()
+  |Instruccion_DeclararMetodo()
+  |estructuraC()
+  |cadaElemento()
+  |EscribirDato()
+  |leerDato()
+  |manejoArchivo()
+  |moverElementoLista()
+  |numAleatorio()
+  |OperacionLista()
+  |OperacionesString()
+  |Operacion_Aritmetica()
+  |OpCaracter()
+  |QuitarEspacio()
+  |MaxMinLista()
+  |seleccionarDatoBD()
+  |crearDatosBD()
+  |usarBD()
+  |crearTabla()
+  |agregarDatosBD()
+  |InstruccionGET()
+  |InstruccionSET()
+}
